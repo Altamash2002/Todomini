@@ -1,0 +1,566 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do </title>
+    <meta name="description" context="">
+    <link rel="preconnect" href=" https://fonts.googleapis.com ">
+    <link rel="preconnect" href=" https://fonts.gstatic.com " crossorigin>
+    <link href=" https://fonts.googleapis.com/css2?family=Nunito+Sans:ital@1&display=swap " rel="stylesheet">
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'base/css/brands.css' %} "> -->
+    <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+    <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
+     <!-- favicon   -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'base/images/favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'base/images/favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'base/images/favicon/favicon-16x16.png' %}">
+
+
+
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <style>
+
+              
+
+        /* sab idar hai page ka bhi idar hai */
+        body{
+            background-image: url("{% static '/base/images/bg-img.png' %}");
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-family: 'Nunito Sans',sans-serif;
+            margin: 0;
+            padding-top: auto;
+        }
+        h1,h3{
+            font-family: 'Raleway',sans-serif;
+        }
+        /* .a1{
+            
+        animation:blinking 1.5s infinite;
+        font-size: 20px;
+
+        } */
+        a,
+        p{
+            text-decoration: none;
+            color: rgb(0, 0, 0);
+        }
+        .header-bar{
+            display: flex;
+            justify-content: space-between;
+            color: rgb(0, 0, 0);
+            padding: 10px;
+            border: 2px solid #000000;
+            border-radius: 5px ;
+            background: linear-gradient(90deg,#fc9980 0%,#fa5d4e 43%,#fa2f1c 100%);
+        }
+        .header-bar a{
+            color: rgb(7, 0, 0);
+            text-decoration: none;
+        }
+        .container{
+            max-width: 500px;
+            width: 400px;
+            /* margin: 100px;
+            margin-left: 1000px; */
+            
+            border-radius: 15px;
+
+            padding: 25px;
+            background-color: rgb(25, 216, 241);
+            -webkit-box-direction: 2px 2px 13px -4px ;
+            box-shadow: 6px 6px 18px -2px rgb(202, 191, 201);
+
+        }
+        .task-wrapper{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #fff;
+            border-top: 1px solid rgb(226,226,226);
+        }
+        .task-title{
+            display: flex;
+        }
+        .task-title a{
+            text-decoration: none;
+            font-size: large;
+            color: #157fd6;
+            margin-left: 10px;
+        }
+        .task-complete-icon{
+            height: 20px;
+            width: 20px;
+            background-color: rgb(9, 241, 9);
+            border-radius: 50%;
+        }
+        .task-incomplete-icon{
+            height: 20px;
+            width: 20px;
+            background-color: rgb(241, 0, 0);
+            border-radius: 50%;
+
+        }
+        .delete-link{
+            text-decoration: none;
+            font-weight: 900;
+            color: #000000;
+            font-size: 22px;
+            line-height: 0;
+        }
+        .handle {
+            display: inline-block;
+            padding: 20px 16px;
+            cursor: grab;
+            user-select: none;
+        }
+
+        .handle:after,
+        .handle:before {
+            display: block;
+            content: "";
+        }
+
+        .handle:active,
+        .handle:active:before,
+        .handle:active:after {
+            cursor: grabbing;
+        }
+
+        .dropArea {
+            background-color: #f1f2f6;
+            color: black;
+            border: #ced6e0 1px solid;
+        }
+
+        .selectedTask {
+            opacity: 0.6;
+        }
+        #search-add-wrapper{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+        #add-link{
+            color: #080401;
+            text-decoration: none;
+            font-size: 42px;
+            text-shadow: 1px 1px #81413b;
+        }
+        @media screen and (max-width:320px) {
+            #search-add-wrapper {
+                padding: 10px;
+            }
+        }
+
+        input[type=text],
+        input[type=password],
+        email[type=email],
+        textarea {
+            border: 2px solid #000000;
+            border-radius: 5px;
+            padding: 10px;
+            width: 90%;
+        }
+
+        label {
+            padding-top: 10px !important;
+            display: block;
+        }
+
+        ::placeholder {
+            font-weight: 300;
+            opacity: 0.5;
+        }
+        .button{
+            border: 2px solid #f86b0c;
+            background-color: #000000;
+            color: #f86b0c;
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+
+        }
+        .card-body{
+            padding: auto;
+        }
+        /* -------------------------------------------------------------------- */
+header{
+position: fixed;
+width: 100%;
+top: 0;
+}
+section{
+margin-top: 170px;
+}
+.uni-padding{
+    padding: 0 7%;
+}
+#contact{
+    background-color: red;
+    padding-left: 100px;
+    padding-right: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#contact-us{
+    color: white;
+    font-size: 18px;
+}
+#contact-us a{
+    text-decoration: none;
+    color: rgb(0, 0, 0)
+}
+#contact-us a:hover{
+    color: blue;
+}
+#contact-us::first-line{
+    font-size: 30px;
+    font-weight: 900;
+}
+#contact-btn{
+    background-color: rgb(22, 1, 1);
+    color: white;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 22px;
+    font-weight: 600;
+    transition: all 0.3s ease 0s;
+}
+#contact-btn:hover{
+    color: rgb(22, 1, 1);
+    background-color: white;
+    font-weight: 600;
+}
+#copyright{
+    background-color: #222f3e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#copyright p{
+    color: white;
+    font-size: 18px;
+}
+.current-page{
+    background-color: rgb(6, 125, 146);
+    padding: 3px 18px;
+    border-radius: 50px;
+}
+#menu-bar{
+    background-color: rgb(31, 29, 63);
+}
+#menu-bar ul{
+    margin: 0px;
+    margin-left: -35px;
+}
+#menu-bar ul li{
+    display: inline-block;
+    padding: 22px 0;
+    padding-right: 60px;
+}
+#menu-bar ul li a{
+    text-decoration: none;
+    color: white;
+    font-size: 21px;
+    transition: all 0.3s ease 0s;
+}
+#menu-bar ul li a:hover{
+    color: rgb(31, 29, 63);
+    background-color: white;
+    padding: 3px 18px;
+    border-radius: 50px;
+}
+/* -----------------------------------------*/
+
+.fab{
+    background-color: black;
+    color: rgb(224, 219, 219);
+    
+    border-radius: 50px;
+    transition: all 0.3s ease 0s;
+}
+.fab:hover{
+    background-color: white;
+    color: black;
+}
+.twitter{
+    padding-left:  8px;
+}
+.linkedin{
+    padding-left: 8px;
+}
+
+.instagram{
+    padding-left: 8px;
+}
+.logo-name{
+    color: #010408;
+
+}
+
+ /* logo-bar styling end. */
+
+#logo-img{
+    width: 5%;
+}
+#logo-bar{
+    background-color: rgb(220, 217, 215);
+    padding-top: 6px;
+    padding-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#social-icon{
+    display: inline-block;
+}
+#todo-str{
+    color: rgb(213, 9, 240);
+}
+.center-body{
+    display: flex;
+    justify-content: center;
+    background: cover;
+    max-width: 100%;
+    max-height: fit-content;
+    text-align: center;
+    padding-top: 70px;
+    padding-bottom: 70px;
+
+}
+
+.icon-list li{
+    display: inline-block;
+    list-style: none;
+}
+
+
+
+/* ----------------------------------------- */
+
+
+
+        /* making responsive :start */
+
+        /* 1) making responsive for the ipad-pro */
+        @media screen and (max-width:1025px){
+            .uni-padding{
+                padding: 0 5%;
+            }
+        }
+
+        /* 2) for ipad */
+        @media screen and (max-width: 769px){
+            /* #todo-str {
+                right: 27%;
+            } */
+            /* menu bar */
+            #menu-bar ul li{
+                padding-right: 25px;
+            }
+            #menu-bar ul li a{
+                font-size: 20px;
+            }  
+            #menu-bar ul li a:hover{
+                padding: 3px 18px;
+            }
+            
+            #contact{
+                    padding-left: 50px;
+                    padding-right: 50px;
+            }
+        }
+
+        /* making responsive for mobile devices */
+        @media screen and (max-width : 450px){
+                
+            /* logobar  */          
+            #todo-str{
+                /* right: 0%;  */
+                font-size: 23px;
+            }
+            #logo-img{
+                width: 12%;
+            }
+
+            /* content */
+            .container{
+                width: 290px;
+            }
+
+            /* footer responsive  */
+            #contact{
+                display: block;
+                height: 148px;
+                text-align: center;
+            }
+            #contact p{
+                font-size: 15px;
+            }
+            #contact-btn{
+                padding: 14px 28px;
+            }
+
+            #copyright{
+                text-align:center;
+            }
+            #copyright p{
+                font-size: 19px;
+            }
+        }
+
+        /* making responsive navigation bar */
+        #menu-bar ul #mobile-cross, #mobile-bar{
+            display: none;
+        }
+
+        @media screen and (max-width : 450px){
+            
+            #menu-bar {
+                position: absolute;
+                top: 0px;
+                height: 100vh;
+                width: 280px;
+                padding: 0px;
+                left: -280px;
+                transition: all 0.5s ease;
+            }
+            #menu-bar ul li {
+                display: block;
+                padding: 22px 0;
+                padding-right: 35px;
+                border-bottom: 1px solid white;
+                padding-left: 20px;
+            }
+            #mobile-cross{
+                text-align: right;
+            }
+            .fa-circle-xmark{
+                font-size: 27px;
+            }
+            #mobile-bar{
+                background-color: rgb(31, 29, 63);
+                color: white;
+                padding: 18px;
+                font-size: 30px;
+            }
+            #menu-bar ul #mobile-cross, #mobile-bar{
+                display: block;
+            }   
+        }
+
+    </style>
+</head>
+
+
+
+<body>
+    <!-- header part tera code  -->
+    <div id="logo-bar" class="uni-padding">
+        <img src="{% static '/base/images/logo.png' %}" alt="logo" id="logo-img" >
+        <h1 class="logo-name">TO-DO</h1>
+        <div id="social-icon">
+        <ul class="icon-list">
+            <li class="facebook"  >
+                <a href="https://www.facebook.com/anirudh.maurya.16"><i class="fab fa-facebook fa-xl fa-beat" style="color:#0861fa;" style="--fa-animation-duration: 2s;"></i></a>
+            </li>
+            <li class="instagram">
+                <a href="https://www.instagram.com/andymaurya12"><i class="fab fa-instagram fa-xl fa-beat" style="color:#0861fa;" style="--fa-animation-duration: 2s;"></i></a>
+            </li>
+            <li class="linkedin">
+                <a href="http://www.linkedin.com/in/maurya-anirudh-deepak-065475219"><i class="fab fa-linkedin fa-xl fa-beat" style="color:#0861fa;" style="--fa-animation-duration: 2s;"></i></a>
+            </li>
+            <li class="twitter">
+                <a href=""><i class="fab fa-twitter fa-xl fa-beat" style="color:#0861fa;" style="--fa-animation-duration: 2s;"></i></a>
+            </li>
+        </ul>
+        
+
+        </div>
+    </div>
+    <nav id="menu-bar" class="uni-padding">
+        <ul>
+            <!-- mobile btn  -->
+            <li id="mobile-cross"><a href="javascript:void(0)" onclick="closeMenu()"><i class="fa-solid fa-circle-xmark"></i></a></li>
+            <!-- mobile-btn upar -->
+            <li id="current-home"><a href="{% url 'home' %}"><i class="fa-solid fa-house-user"></i> Home</a></li>
+            <li id="current-login"><a href="{% url 'login' %}"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a></li>
+            <li id="current-register"><a href="{% url 'register' %}"><i class="fa-solid fa-registered"></i> Register</a></li>
+            <li id="current-contact"><a class="current-page" href="{% url 'contact' %}"><i class="fa-solid fa-address-book"></i> Contact</a></li>
+        </ul>
+    </nav>
+    <!-- mobile menu btn -->
+    <div id="mobile-bar" onclick="openMenu()">
+        <i class="fa-solid fa-bars"></i> Menu
+    </div>
+
+<!-- content of every page start-->
+    <div class="center-body" class="uni-padding" >
+        <!-- <div class="text-body"> 
+
+        </div> -->
+        <!-- form ka container hai ye use karke sab page pe use kar saktha hai  part hai -->
+        <div class="container" class="uni-padding">
+            {% block content %}
+                
+                <div class="card-body" >
+                    
+                    <div class="header-bar">
+                        <h1 style="color: white;">Send Me A Message</h1>
+                    </div>
+                    <form method="POST" action="" style="color: rgb(146, 72, 40);">
+                        {% csrf_token %}
+                        {% for hidden in form.hidden_fields %}
+                        {{ hidden }}
+                        {% endfor %}
+                        {% for field in form.visible_fields %}
+                        <div class="form-group">
+                            {{ field.error }}
+                            <label>{{ field.label_tag }}</label>
+                            <p>{{field}}</p>
+                        </div>
+                        {% endfor %}
+                        <button type="reset" class="button">Reset</button>
+                        <button type="submit" class="button">Submit</button>
+                                    
+                    </form>
+
+                </div>
+            {% endblock content %}
+        </div>
+    </div>
+<!-- content of every page ends -->
+
+    <footer >
+        <div id="contact" class="uni-padding">
+            <p id="contact-us">Contact Us Here <br> for more information mail Us <a class="a1" href="mailto:anirudhmaurya_ce_2020@ltce.in"> Here  </a>  <br> Toll free : 12345-06789</p>
+            <a href="{% url 'contact' %}" id="contact-btn"><i class="fa-solid fa-address-book"></i> Contact Us</a>
+        </div>
+        <div id="copyright" class="uni-padding">
+            <p>Copyright &copy; Altamash Ankan Anirudh 2022</p>
+        </div>
+    </footer>
+
+    <script>
+        function openMenu(){
+            document.getElementById("menu-bar").style.left = "0px";
+        }
+        function closeMenu(){
+            document.getElementById("menu-bar").style.left = "-280px";
+        }
+
+    </script>
+</body>
+</html>
